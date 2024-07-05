@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random File Download</title>
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function getRandomChar() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                return chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+
+            function generateRandomContent(length) {
+                let result = '';
+                for (let i = 0; i < length; i++) {
+                    result += getRandomChar();
+                }
+                return result;
+            }
+
+            function getRandomFileName() {
+                const nameLength = 10;
+                let result = '';
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                for (let i = 0; i < nameLength; i++) {
+                    result += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return result + '.txt';
+            }
+
+            function downloadFile(content, fileName) {
+                const blob = new Blob([content], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            const randomContent = generateRandomContent(250);
+            const randomFileName = getRandomFileName();
+            downloadFile(randomContent, randomFileName);
+        });
+    </script>
+</body>
+</html>
